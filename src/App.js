@@ -1,14 +1,14 @@
 import './App.css'
 import Firebaseauthentication from './Firebase/Firebase.initial';
-import {signInWithPopup,getAuth, GithubAuthProvider,signOut } from "firebase/auth";
+import {signInWithPopup,getAuth,FacebookAuthProvider,signOut } from "firebase/auth";
 import {useState} from 'react'
 Firebaseauthentication()
 function App() {
   const [User,Setuser]=useState({})
    const auth = getAuth();
-  function GithubSign(){
-    const githubprovider = new GithubAuthProvider();
-    signInWithPopup(auth,githubprovider)
+  function FacebookSignIn(){
+    const Facebookprovider = new FacebookAuthProvider();
+    signInWithPopup(auth,Facebookprovider)
      .then(result=>{
       const user=result.user
       Setuser(user)
@@ -17,7 +17,7 @@ function App() {
       console.log(error)
      })
   }
-  function GitsignOut(){
+  function FaceSignOut(){
   signOut(auth)
   .then(()=>{
     Setuser({})
@@ -27,8 +27,8 @@ function App() {
   }
   return (
     <div className="App">
-      {User.email ? <button className="border py-1 px-3" onClick={GitsignOut}>Sign Out</button>
-      :<button className="border py-1 px-3" onClick={GithubSign}>Github Sign In</button>}
+      {User.email ? <button className="border py-1 px-3" onClick={FaceSignOut}>Sign Out</button>
+      :<button className="border py-1 px-3" onClick={FacebookSignIn}>Facebook Sign In</button>}
    
    
    
