@@ -1,0 +1,13 @@
+*{
+  padding: 0px;
+  margin:0px;
+}
+.App{
+  text-align: center;
+}
+.dic h1 {
+  text-align: center;
+  display: block;
+  display: flex;
+  justify-content: center;
+}
