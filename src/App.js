@@ -1,43 +1,48 @@
 import './App.css'
 import Firebaseauthentication from './Firebase/Firebase.initial';
-import {signInWithPopup,getAuth,FacebookAuthProvider,signOut } from "firebase/auth";
+import { getAuth ,createUserWithEmailAndPassword,sendEmailVerification  } from "firebase/auth";
 import {useState} from 'react'
+
 Firebaseauthentication()
 function App() {
-  const [User,Setuser]=useState({})
-   const auth = getAuth();
-  function FacebookSignIn(){
-    const Facebookprovider = new FacebookAuthProvider();
-    signInWithPopup(auth,Facebookprovider)
-     .then(result=>{
-      const user=result.user
-      Setuser(user)
-      console.log(user)
-     }).catch(error=>{
-      console.log(error)
-     })
+  
+  const [email,setemail]=useState('')
+  const [pass,setpass]=useState('')
+  function handleEmail(event){
+    setemail(event.target.value)
   }
-  function FaceSignOut(){
-  signOut(auth)
-  .then(()=>{
-    Setuser({})
-  }).catch((error)=>{
-    console.log(error)
-  })
+  function handlepass(event){
+    setpass(event.target.value)
+  }
+  const HandleSubmit=(e)=>{
+    e.preventDefault()
+    const auth = getAuth();
+    createUserWithEmailAndPassword(auth,email,pass)
+    .then(result=>{
+      const user=result.user
+      console.log(user)
+      EmailVarify()
+    }).catch((error)=>{
+      console.log(error)
+    })
+  }
+  //! Note:how to in your email inbox not allow.Your email check spam button.
+  function EmailVarify() {
+    const auth = getAuth();
+    sendEmailVerification(auth.currentUser)
+      .then(() => {
+      console.log("Your Email sent in your inbox")
+      });
   }
   return (
     <div className="App">
-      {User.email ? <button className="border py-1 px-3" onClick={FaceSignOut}>Sign Out</button>
-      :<button className="border py-1 px-3" onClick={FacebookSignIn}>Facebook Sign In</button>}
-   
-   
-   
-    {User.email && <div className='dic'>
-      <h1>Name:{User.displayName}</h1>
-      <h1>Email:{User.email}</h1>
-      <h1><img  src={User.photoURL} alt="" /></h1>
-    </div>}
-    </div>
+      <br/>
+     <form className="space-y-3" onSubmit={HandleSubmit}>
+      <h1>Email:<input onChange={handleEmail} className="border border-red-800" type="text"/></h1>
+      <h1>Password:<input onChange={handlepass} className="border border-red-800" type="password"/></h1>
+      <button className="border border-[green] px-3">Sign In</button>
+     </form>
+      </div>
   );
 }
 
