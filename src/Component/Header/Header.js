@@ -1,17 +1,22 @@
 import React from 'react'
-import {Link} from 'react-router-dom'
-import useFirebase from '../Hooks/UseFirebase'
+import { Link } from 'react-router-dom'
+import './Header.css'
+import { getAuth,signOut} from "firebase/auth";
+import { useAuthState} from 'react-firebase-hooks/auth';
+import app from '../Firebase/Firebase.int';
+import CustomLink from '../CustomLink/CustomLink';
+const auth=getAuth(app)
 
 function Header() {
-    const {user,handlesignout}=useFirebase()
+    const [user] = useAuthState(auth);
     return (
-        <div className='navcss'>
-           <Link to="/Home">Home</Link> 
-           <Link to="/Product">Products</Link>
-           <Link to="/orders">Orders</Link>
-           <Link to="/register">Register</Link>
-           <span>{user?.displayName && user.displayName}</span>
-           {user?.uid ? <button onClick={handlesignout}>Sign Out</button>:<Link to="/LogIn">Log In</Link>}
+        <div className='div'>
+            <CustomLink to="/Home">Home</CustomLink>
+            <CustomLink to="/Servies">Servies</CustomLink>
+            <CustomLink to="/Order">Order</CustomLink>
+            <CustomLink to="/LogIn">LogIn</CustomLink>
+            <span>{user?.displayName && user.displayName }</span>
+            {user?.displayName ?<button onClick={()=>signOut(auth)}>Sign Out</button>:<CustomLink to="/SignIn">Sign In</CustomLink>}
         </div>
     )
 }
