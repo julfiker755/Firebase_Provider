@@ -5,9 +5,18 @@
 .App{
   text-align: center;
 }
-.dic h1 {
-  text-align: center;
-  display: block;
-  display: flex;
-  justify-content: center;
+/* home css */
+.navcss {
+  background: green;
+  color: white;
+  padding: 9px 0px;
+}
+
+.navcss a {
+  color: white;
+  margin: 0px 5px;
+  text-decoration: none;
+}
+input:focus{
+  outline: none;
 }
