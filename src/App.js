@@ -1,32 +1,39 @@
-import './App.css'
-import { BrowserRouter as Router,Routes,Route } from "react-router-dom";
-import Home from './Component/Home/Home';
-import Servies from './Component/Servies/Servies';
-import LogIn from './Component/LogIn/LogIn';
-import SignIn from './Component/SignIn/SignIn';
-import Header from './Component/Header/Header';
-import Order from './Component/Order/Order';
-import RequireAuth from './Component/RequireAuth/RequireAuth';
 
+import { Route, Routes } from 'react-router-dom';
+import './App.css';
+import About from './components/About/About';
+import Header from './components/Header/Header';
+import Inventory from './components/Inventory/Inventory';
+import Login from './components/Login/Login';
+import Orders from './components/Orders/Orders';
+import RequireAuth from './components/RequireAuth/RequireAuth';
+import Shipment from './components/Shipment/Shipment';
+import Shop from './components/Shop/Shop';
+import SignUp from './components/SignUp/SignUp';
 
-function App() { 
+function App() {
   return (
-    <div className="App">
-        <Router>
-          <Header/>
-          <Routes>
-            <Route index path="/" element={<Home/>}/>
-            <Route path="/Home" element={<Home/>}/>
-            <Route path="/Servies" element={<Servies/>}/>
-            <Route path="/Order" element={
-              <RequireAuth><Order/></RequireAuth>
-            }></Route>
-            <Route path="/LogIn" element={<LogIn/>}/>
-            <Route path="/SignIn" element={<SignIn/>}/>
-
-          </Routes>
-        </Router>
-      </div>
+    <div>
+      <Header></Header>
+      <Routes>
+        <Route path='/' element={<Shop></Shop>}></Route>
+        <Route path='/shop' element={<Shop></Shop>}></Route>
+        <Route path='/orders' element={<Orders></Orders>}></Route>
+        <Route path='/inventory' element={
+          <RequireAuth>
+            <Inventory></Inventory>
+          </RequireAuth>
+        }></Route>
+        <Route path="/shipment" element={
+          <RequireAuth>
+            <Shipment></Shipment>
+          </RequireAuth>
+        }></Route>
+        <Route path='/about' element={<About></About>}></Route>
+        <Route path='/login' element={<Login></Login>}></Route>
+        <Route path='/signup' element={<SignUp></SignUp>}></Route>
+      </Routes>
+    </div>
   );
 }
 
